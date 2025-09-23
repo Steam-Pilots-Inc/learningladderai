@@ -1,0 +1,349 @@
+
+
+:root {
+  --font-size: 16px;
+  --background: #ffffff;
+  --foreground: oklch(0.145 0 0);
+  --card: #ffffff;
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: #4497CD;
+  --primary-foreground: #ffffff;
+  --secondary: #DC7766;
+  --secondary-foreground: #ffffff;
+  --muted: #f0f4f8;
+  --muted-foreground: #64748b;
+  --accent: #DC7766;
+  --accent-foreground: #ffffff;
+  --destructive: #DC7766;
+  --destructive-foreground: #ffffff;
+  --border: rgba(68, 151, 205, 0.2);
+  --input: transparent;
+  --input-background: rgba(68, 151, 205, 0.05);
+  --switch-background: rgba(68, 151, 205, 0.2);
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ring: #4497CD;
+  --chart-1: #4497CD;
+  --chart-2: #DC7766;
+  --chart-3: rgba(68, 151, 205, 0.7);
+  --chart-4: rgba(220, 119, 102, 0.7);
+  --chart-5: rgba(68, 151, 205, 0.5);
+  --radius: 0.625rem;
+  --sidebar: #f8fafc;
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: #4497CD;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: rgba(68, 151, 205, 0.1);
+  --sidebar-accent-foreground: #4497CD;
+  --sidebar-border: rgba(68, 151, 205, 0.2);
+  --sidebar-ring: #4497CD;
+}
+
+.dark {
+  --background: #1a1a1a;
+  --foreground: #ffffff;
+  --card: #1a1a1a;
+  --card-foreground: #ffffff;
+  --popover: #1a1a1a;
+  --popover-foreground: #ffffff;
+  --primary: #4497CD;
+  --primary-foreground: #ffffff;
+  --secondary: #DC7766;
+  --secondary-foreground: #ffffff;
+  --muted: #2a2a2a;
+  --muted-foreground: #a1a1aa;
+  --accent: #DC7766;
+  --accent-foreground: #ffffff;
+  --destructive: #DC7766;
+  --destructive-foreground: #ffffff;
+  --border: rgba(68, 151, 205, 0.3);
+  --input: rgba(68, 151, 205, 0.1);
+  --ring: #4497CD;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --chart-1: #4497CD;
+  --chart-2: #DC7766;
+  --chart-3: rgba(68, 151, 205, 0.7);
+  --chart-4: rgba(220, 119, 102, 0.7);
+  --chart-5: rgba(68, 151, 205, 0.5);
+  --sidebar: #1a1a1a;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #4497CD;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: rgba(68, 151, 205, 0.1);
+  --sidebar-accent-foreground: #4497CD;
+  --sidebar-border: rgba(68, 151, 205, 0.3);
+  --sidebar-ring: #4497CD;
+}
+
+
+
+@layer base {
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+}
+
+/**
+ * Base typography.
+ */
+@layer base {
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  h3 {
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  h4 {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  p {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  label {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  button {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  input {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+}
+
+html {
+  font-size: var(--font-size);
+}
+
+/* Custom scrollbar utilities */
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Unified Interactive Element System - Optimized */
+@layer utilities {
+  /* Glass Container Base */
+  .glass-container {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .glass-container-heavy {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+
+  /* Primary Interactive (Brand Blue) */
+  .interactive-primary {
+    position: relative;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background: rgba(68, 151, 205, 0.1);
+    border: 1px solid rgba(68, 151, 205, 0.2);
+    color: #4497CD;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+  }
+
+  .interactive-primary:hover {
+    background: rgba(68, 151, 205, 0.15);
+    border-color: rgba(68, 151, 205, 0.3);
+    transform: translateY(-1px);
+  }
+
+  .interactive-primary:active {
+    background: rgba(68, 151, 205, 0.2);
+    transform: translateY(0);
+  }
+
+  /* Secondary Interactive (Brand Coral) */
+  .interactive-secondary {
+    position: relative;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background: rgba(220, 119, 102, 0.1);
+    border: 1px solid rgba(220, 119, 102, 0.2);
+    color: #DC7766;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+  }
+
+  .interactive-secondary:hover {
+    background: rgba(220, 119, 102, 0.15);
+    border-color: rgba(220, 119, 102, 0.3);
+    transform: translateY(-1px);
+  }
+
+  .interactive-secondary:active {
+    background: rgba(220, 119, 102, 0.2);
+    transform: translateY(0);
+  }
+
+  /* Glass Interactive (Neutral) */
+  .interactive-glass {
+    position: relative;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: var(--muted-foreground) !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .interactive-glass:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    color: var(--foreground) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  .interactive-glass:active {
+    background: rgba(255, 255, 255, 0.15) !important;
+    transform: translateY(0) !important;
+  }
+
+  .interactive-glass:focus-visible {
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3) !important;
+  }
+
+  /* Card Interactive */
+  .interactive-card {
+    position: relative;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.75rem;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .interactive-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px) scale(1.01);
+  }
+
+  .interactive-card:active {
+    transform: translateY(-1px) scale(1.005);
+  }
+
+  /* Button Sizes */
+  .btn-xs {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+
+  .btn-sm {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .btn-md {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  .btn-lg {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
+  /* Special States */
+  .interactive-loading {
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
+  .interactive-success {
+    background: rgba(34, 197, 94, 0.1);
+    border-color: rgba(34, 197, 94, 0.3);
+    color: #22c55e;
+  }
+
+  .interactive-disabled {
+    pointer-events: none;
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  /* Simple Pulse Animation */
+  .pulse-primary {
+    animation: pulse-primary 2s infinite;
+  }
+
+  @keyframes pulse-primary {
+    0%, 100% {
+      box-shadow: 0 0 0 0 rgba(68, 151, 205, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 0 4px rgba(68, 151, 205, 0);
+    }
+  }
+
+  .pulse-secondary {
+    animation: pulse-secondary 2s infinite;
+  }
+
+  @keyframes pulse-secondary {
+    0%, 100% {
+      box-shadow: 0 0 0 0 rgba(220, 119, 102, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 0 4px rgba(220, 119, 102, 0);
+    }
+  }
+
+  /* Simple Glow Effect */
+  .glow-primary {
+    box-shadow: 0 0 10px rgba(68, 151, 205, 0.2);
+  }
+
+  .glow-secondary {
+    box-shadow: 0 0 10px rgba(220, 119, 102, 0.2);
+  }
+}

@@ -1,0 +1,241 @@
+
+
+:root {
+  --font-size: 16px;
+  --background: #ffffff;
+  --foreground: oklch(0.145 0 0);
+  --card: #ffffff;
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: #4497CD;
+  --primary-foreground: #ffffff;
+  --secondary: #DC7766;
+  --secondary-foreground: #ffffff;
+  --muted: #f0f4f8;
+  --muted-foreground: #64748b;
+  --accent: #DC7766;
+  --accent-foreground: #ffffff;
+  --destructive: #DC7766;
+  --destructive-foreground: #ffffff;
+  --border: rgba(68, 151, 205, 0.2);
+  --input: transparent;
+  --input-background: rgba(68, 151, 205, 0.05);
+  --switch-background: rgba(68, 151, 205, 0.2);
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ring: #4497CD;
+  --chart-1: #4497CD;
+  --chart-2: #DC7766;
+  --chart-3: rgba(68, 151, 205, 0.7);
+  --chart-4: rgba(220, 119, 102, 0.7);
+  --chart-5: rgba(68, 151, 205, 0.5);
+  --radius: 0.625rem;
+  --sidebar: #f8fafc;
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: #4497CD;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: rgba(68, 151, 205, 0.1);
+  --sidebar-accent-foreground: #4497CD;
+  --sidebar-border: rgba(68, 151, 205, 0.2);
+  --sidebar-ring: #4497CD;
+}
+
+.dark {
+  --background: #1a1a1a;
+  --foreground: #ffffff;
+  --card: #1a1a1a;
+  --card-foreground: #ffffff;
+  --popover: #1a1a1a;
+  --popover-foreground: #ffffff;
+  --primary: #4497CD;
+  --primary-foreground: #ffffff;
+  --secondary: #DC7766;
+  --secondary-foreground: #ffffff;
+  --muted: #2a2a2a;
+  --muted-foreground: #a1a1aa;
+  --accent: #DC7766;
+  --accent-foreground: #ffffff;
+  --destructive: #DC7766;
+  --destructive-foreground: #ffffff;
+  --border: rgba(68, 151, 205, 0.3);
+  --input: rgba(68, 151, 205, 0.1);
+  --ring: #4497CD;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --chart-1: #4497CD;
+  --chart-2: #DC7766;
+  --chart-3: rgba(68, 151, 205, 0.7);
+  --chart-4: rgba(220, 119, 102, 0.7);
+  --chart-5: rgba(68, 151, 205, 0.5);
+  --sidebar: #1a1a1a;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #4497CD;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: rgba(68, 151, 205, 0.1);
+  --sidebar-accent-foreground: #4497CD;
+  --sidebar-border: rgba(68, 151, 205, 0.3);
+  --sidebar-ring: #4497CD;
+}
+
+
+
+@layer base {
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+}
+
+/**
+ * Base typography.
+ */
+@layer base {
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  h3 {
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  h4 {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  p {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  label {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  button {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  input {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+}
+
+html {
+  font-size: var(--font-size);
+}
+
+/* Custom scrollbar utilities */
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Learning Ladder AI Brand Gradients */
+  .gradient-primary {
+    background: linear-gradient(135deg, #4497CD 0%, #DC7766 100%);
+  }
+  
+  .gradient-primary-subtle {
+    background: linear-gradient(135deg, rgba(68, 151, 205, 0.1) 0%, rgba(220, 119, 102, 0.1) 100%);
+  }
+  
+  .gradient-text {
+    background: linear-gradient(135deg, #4497CD 0%, #DC7766 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .gradient-border {
+    border: 1px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #4497CD, #DC7766) border-box;
+  }
+  
+  /* Glassmorphism & Frosted Glass Effects */
+  .glass {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+  
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  .glass-subtle {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .glass-gradient {
+    background: linear-gradient(135deg, 
+      rgba(68, 151, 205, 0.2) 0%, 
+      rgba(220, 119, 102, 0.15) 100%);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(68, 151, 205, 0.2);
+  }
+  
+  .glass-gradient-strong {
+    background: linear-gradient(135deg, 
+      rgba(68, 151, 205, 0.3) 0%, 
+      rgba(220, 119, 102, 0.25) 100%);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(68, 151, 205, 0.3);
+  }
+  
+  .glass-dark {
+    background: rgba(26, 26, 26, 0.4);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .frosted {
+    backdrop-filter: blur(10px) saturate(180%);
+    -webkit-backdrop-filter: blur(10px) saturate(180%);
+    background-color: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(209, 213, 219, 0.3);
+  }
+  
+  .frosted-gradient {
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    background: linear-gradient(135deg, 
+      rgba(68, 151, 205, 0.25) 0%, 
+      rgba(220, 119, 102, 0.2) 100%);
+    border: 1px solid rgba(68, 151, 205, 0.25);
+  }
+}
