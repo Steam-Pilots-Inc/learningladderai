@@ -1,0 +1,10 @@
+# macOS system files
+.DS_Store
+
+# Figma plugin cache
+*.figma
+
+# Node or Python projects
+node_modules/
+__pycache__/
+*.pyc
