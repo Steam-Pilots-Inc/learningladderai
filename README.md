@@ -17,9 +17,9 @@ This repository contains two Figma-exported UI designs created for a student cha
 ## ⚠️ Known Issues
 
 These designs are early prototypes and not fully polished:
-- Some text overlaps on different screen sizes
-- Transparency and blur effects may display inconsistently
-- Layout responsiveness is not fully optimized
+- Some text overlaps on different screen sizes (MK)
+- Transparency and blur effects may display inconsistently (MK)
+- Layout responsiveness is not fully optimized (MK)
 
 ---
 
