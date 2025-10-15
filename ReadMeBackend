@@ -1,3 +1,0 @@
-To gain an API for the Gemini model create a free Google AI Studio account sign in and click "Get API Key" in the bottom left corner
-
-If using Colab, go to the side bar on the left, click the key icon, and click the Gemini API Key dropdown, select "import key from Gemini Studio", and select your key, and insert the name into the "XXXXXXXXXX" portion of API_KEY = "XXXXXXXXXX"
