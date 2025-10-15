@@ -1,0 +1,16 @@
+{
+  "name": "learningladderai",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@9.12.0",
+  "workspaces": [
+    "frontend/chatbot-interface",
+    "frontend/homepage-concept"
+  ],
+  "scripts": {
+    "dev": "pnpm run dev:chatbot",
+    "dev:chatbot": "pnpm --filter chatbot-interface dev",
+    "dev:homepage": "pnpm --filter homepage-concept dev",
+    "build": "pnpm --filter chatbot-interface build && pnpm --filter homepage-concept build"
+  }
+}

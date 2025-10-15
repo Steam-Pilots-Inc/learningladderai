@@ -1,26 +1,37 @@
 # STEAM Pilots Learning Ladder AI
 
-## Front End
+Learning Ladder AI explores how Gemini-powered tutoring flows pair with polished onboarding and marketing experiences.
 
-This repository contains two UI designs created for STEAM Pilots and the AI challange.
+## Structure
 
-### UI Folders
+- `frontend/` – Vite + React prototypes (`chatbot-interface`, `homepage-concept`) for the product surfaces.
+- `backend/` – Gemini CLI that generates adaptive questions and grades answers.
+- `docs/` – Reference material for UX guidelines, product notes, and research.
 
-- `homepage-ui/`:  
-  A landing page concept for a STEM-focused educational platform. Includes navigation, hero section, and program highlights.
+Supporting files add polish (`LICENSE`, `.editorconfig`, `.prettierrc`, and `CONTRIBUTING.md`).
 
-- `chatbot-ui/`:  
-  A prototype interface for a personalized AI tutor chatbot using LLM integration. Includes chat panel, input field, and topic selection.
+## Quick Start
 
-## Back End
+```bash
+# install workspace dependencies
+pnpm install
 
-To gain an API for the Gemini model create a free Google AI Studio account sign in and click "Get API Key" in the bottom left corner
+# run the chatbot interface
+pnpm dev --filter chatbot-interface
 
-If using Colab, go to the side bar on the left, click the key icon, and click the Gemini API Key dropdown, select "import key from Gemini Studio", and select your key, and insert the name into the "XXXXXXXXXX" portion of API_KEY = "XXXXXXXXXX"
+# launch the backend CLI (after setting GEMINI_API_KEY)
+python -m backend.app.main
+```
 
-## ⚠️ Known Issues
+See `frontend/README.md` and `backend/README.md` for deeper instructions.
 
-These designs are early prototypes and not fully polished:
-- Some text overlaps on different screen sizes (MK)
-- Transparency and blur effects may display inconsistently (MK)
-- Layout responsiveness is not fully optimized (MK)
+## Environment
+
+Create `backend/.env` from `.env.example` and add your Gemini key. No keys should be committed to the repository.
+
+## Known Issues
+
+These screens remain prototypes:
+- Some text overlaps on smaller breakpoints (MK)
+- Transparency and blur effects may render inconsistently (MK)
+- Layout responsiveness still needs iteration (MK)
