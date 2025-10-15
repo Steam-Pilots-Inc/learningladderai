@@ -1,4 +1,4 @@
-from backend.app.main import extract_json_object, is_similar
+from backend.app.ladder import extract_json_object, is_similar
 
 
 def test_is_similar_accepts_equivalent_numbers():

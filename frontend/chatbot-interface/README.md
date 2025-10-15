@@ -1,6 +1,7 @@
 # Chatbot Interface
 
-React + Vite prototype for the Learning Ladder conversational tutor.
+React + Vite prototype for the Learning Ladder conversational tutor. The app now
+talks to the Gemini-powered backend for question generation and grading.
 
 ## Development
 
@@ -17,7 +18,11 @@ If you are using the repository workspaces, you can run from the root instead:
 pnpm dev --filter chatbot-interface
 ```
 
+Create `.env` from `.env.example` and point `VITE_BACKEND_URL` at your running
+FastAPI instance (defaults to `http://localhost:8000`).
+
 ## Notes
 
 - Built with ShadCN UI components for rapid experimentation.
-- Static copy focuses on layout; hook it up to the backend when flows stabilise.
+- Live responses depend on the backend API; fall back to the retry button in the
+  chat if the connection drops.

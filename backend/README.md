@@ -1,6 +1,6 @@
 # Backend
 
-A lightweight CLI for the STEM Learning Ladder that talks to the Gemini API.
+A lightweight Gemini-powered service that drives the STEM Learning Ladder.
 
 ## Prerequisites
 
@@ -18,7 +18,21 @@ A lightweight CLI for the STEM Learning Ladder that talks to the Gemini API.
 
 3. Copy `.env.example` to `.env` and populate `GEMINI_API_KEY` with your key.
 
-## Usage
+## API server
+
+Run the FastAPI service (default port 8000):
+
+```bash
+uvicorn backend.app.api:app --reload
+```
+
+Endpoints:
+
+- `GET /health` – basic readiness probe
+- `POST /api/session` – start a new learning session (optional body for custom grade/subject)
+- `POST /api/session/{session_id}/answer` – grade an answer and receive the next question
+
+## CLI
 
 Run the interactive CLI:
 

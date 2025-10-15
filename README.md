@@ -5,7 +5,7 @@ Learning Ladder AI explores how Gemini-powered tutoring flows pair with polished
 ## Structure
 
 - `frontend/` – Vite + React prototypes (`chatbot-interface`, `homepage-concept`) for the product surfaces.
-- `backend/` – Gemini CLI that generates adaptive questions and grades answers.
+- `backend/` – Gemini API + CLI that generates adaptive questions and grades answers.
 - `docs/` – Reference material for UX guidelines, product notes, and research.
 
 Supporting files add polish (`LICENSE`, `.editorconfig`, `.prettierrc`, and `CONTRIBUTING.md`).
@@ -16,18 +16,18 @@ Supporting files add polish (`LICENSE`, `.editorconfig`, `.prettierrc`, and `CON
 # install workspace dependencies
 pnpm install
 
-# run the chatbot interface
-pnpm dev --filter chatbot-interface
+# run the backend API (requires GEMINI_API_KEY in backend/.env)
+uvicorn backend.app.api:app --reload
 
-# launch the backend CLI (after setting GEMINI_API_KEY)
-python -m backend.app.main
+# run the chatbot interface in another terminal
+pnpm dev --filter chatbot-interface
 ```
 
-See `frontend/README.md` and `backend/README.md` for deeper instructions.
+See `frontend/README.md` and `backend/README.md` for deeper instructions, including the CLI mode.
 
 ## Environment
 
-Create `backend/.env` from `.env.example` and add your Gemini key. No keys should be committed to the repository.
+Create `backend/.env` from `.env.example` and add your Gemini key. For local development you can set `VITE_BACKEND_URL=http://localhost:8000` in `frontend/chatbot-interface/.env`.
 
 ## Known Issues
 

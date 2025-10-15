@@ -25,3 +25,13 @@ npm run dev
 ```
 
 Repeat with `homepage-concept` to explore the second design.
+
+### Backend connection
+
+The chatbot interface expects the Gemini API to be running. Create `frontend/chatbot-interface/.env` with
+
+```
+VITE_BACKEND_URL=http://localhost:8000
+```
+
+to point the UI at a local FastAPI instance.
