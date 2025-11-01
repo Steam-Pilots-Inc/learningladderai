@@ -43,3 +43,11 @@ export interface SessionConfig {
   gradingMode?: "ai" | "fast";
   modelName?: string;
 }
+
+export interface ChatSessionResponse {
+  chatSessionId: string;
+}
+
+export interface ChatMessageResponse {
+  reply: string;
+}

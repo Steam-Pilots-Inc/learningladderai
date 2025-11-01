@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from difflib import SequenceMatcher
 from typing import Optional, Tuple
 
@@ -47,7 +47,10 @@ def extract_json_object(text: str) -> Optional[dict]:
 
 
 def get_question(
-    model: genai.GenerativeModel, settings: GameSettings, level: int
+    model: genai.GenerativeModel,
+    settings: GameSettings,
+    level: int,
+    exclude: Optional[list[str]] = None,
 ) -> Tuple[str, str]:
     """Request a single question/answer pair from Gemini."""
     prompt = (
@@ -55,6 +58,12 @@ def get_question(
         f"at difficulty {level} (1=easy, {settings.max_diff}=hard). "
         "Return the result strictly in JSON with keys 'question' and 'answer'."
     )
+    if exclude:
+        recent = "; ".join(exclude[-5:])
+        prompt += (
+            " Avoid repeating any of the following question prompts: "
+            f"{recent}."
+        )
     response = model.generate_content(prompt)
     text = (response.text or "").strip()
     data = extract_json_object(text)
@@ -88,10 +97,15 @@ def ai_grade(
         "Respond ONLY with 'correct' or 'incorrect'."
     )
     try:
-        result = model.generate_content(prompt).text.strip().lower()
+        result = model.generate_content(prompt).text or ""
     except Exception:
         return False
-    return "correct" in result
+    normalized = result.strip().lower()
+    if normalized.startswith("correct"):
+        return True
+    if normalized.startswith("incorrect"):
+        return False
+    return False
 
 
 def fetch_ai_solution(

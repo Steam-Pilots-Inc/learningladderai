@@ -84,6 +84,21 @@
   body {
     background-color: var(--background);
     color: var(--foreground);
+    margin: 0;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  #root {
+    display: flex;
+  }
+
+  body {
+    overflow: hidden;
   }
 }
 

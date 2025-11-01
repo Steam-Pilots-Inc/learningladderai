@@ -3,7 +3,7 @@ from __future__ import annotations
 import os
 import threading
 import uuid
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Dict, Optional, Tuple
 
 from dotenv import load_dotenv
@@ -19,6 +19,7 @@ from .ladder import (
     get_question,
     is_similar,
 )
+import google.generativeai as genai
 
 
 @dataclass
@@ -30,6 +31,7 @@ class SessionState:
     score: int = 0
     current_question: Optional[str] = None
     current_answer: Optional[str] = None
+    asked_questions: list[str] = field(default_factory=list)
 
 
 class SessionManager:
@@ -63,6 +65,7 @@ class SessionManager:
             score=stored.score,
             current_question=stored.current_question,
             current_answer=stored.current_answer,
+            asked_questions=list(stored.asked_questions),
         )
 
         if not state.current_question or not state.current_answer:
@@ -102,13 +105,27 @@ class SessionManager:
     def _generate_question(self, state: SessionState) -> Tuple[str, str]:
         attempts = 0
         question, answer = "Error: could not parse question.", "N/A"
-        while attempts < 3:
-            question, answer = get_question(self._model, state.settings, state.level)
-            if not question.startswith("Error"):
-                break
-            attempts += 1
+        while attempts < 5:
+            question, answer = get_question(
+                self._model,
+                state.settings,
+                state.level,
+                exclude=state.asked_questions,
+            )
+            if question.startswith("Error"):
+                attempts += 1
+                continue
+            if question in state.asked_questions:
+                attempts += 1
+                continue
+            state.current_question = question
+            state.current_answer = answer
+            state.asked_questions.append(question)
+            return question, answer
         state.current_question = question
         state.current_answer = answer
+        if question and not question.startswith("Error") and question not in state.asked_questions:
+            state.asked_questions.append(question)
         return question, answer
 
 
@@ -151,6 +168,43 @@ except ValueError as exc:
     raise RuntimeError("Backend startup failed: configure GEMINI_API_KEY.") from exc
 
 SESSION_MANAGER = SessionManager(MODEL)
+
+# --- Conversational tutoring (chat) ---
+
+@dataclass
+class ChatState:
+    chat: any
+
+
+class ChatManager:
+    def __init__(self, model: genai.GenerativeModel):
+        self._model = model
+        self._chats: Dict[str, ChatState] = {}
+        self._lock = threading.Lock()
+
+    def create_chat(self) -> str:
+        system_preamble = (
+            "You are a friendly, step-by-step math tutor. "
+            "Explain reasoning clearly and keep steps concise."
+        )
+        chat = self._model.start_chat(
+            history=[{"role": "user", "parts": [system_preamble]}]
+        )
+        chat_id = uuid.uuid4().hex
+        with self._lock:
+            self._chats[chat_id] = ChatState(chat=chat)
+        return chat_id
+
+    def send(self, chat_id: str, message: str) -> str:
+        with self._lock:
+            state = self._chats.get(chat_id)
+        if not state:
+            raise KeyError(chat_id)
+        resp = state.chat.send_message(message)
+        return (resp.text or "").strip()
+
+
+CHAT_MANAGER = ChatManager(MODEL)
 
 app = FastAPI(title="Learning Ladder AI API", version="0.1.0")
 app.add_middleware(
@@ -221,3 +275,30 @@ def submit_answer(
         level=state.level,
         next_question=next_question,
     )
+
+
+class ChatSessionResponse(BaseModel):
+    chat_session_id: str
+
+
+class ChatMessageRequest(BaseModel):
+    message: str = Field(..., min_length=1)
+
+
+class ChatMessageResponse(BaseModel):
+    reply: str
+
+
+@app.post("/api/chat/session", response_model=ChatSessionResponse)
+def create_chat_session() -> ChatSessionResponse:
+    chat_id = CHAT_MANAGER.create_chat()
+    return ChatSessionResponse(chat_session_id=chat_id)
+
+
+@app.post("/api/chat/{chat_id}/message", response_model=ChatMessageResponse)
+def chat_message(chat_id: str, request: ChatMessageRequest) -> ChatMessageResponse:
+    try:
+        reply = CHAT_MANAGER.send(chat_id, request.message)
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail="Chat session not found.") from exc
+    return ChatMessageResponse(reply=reply)

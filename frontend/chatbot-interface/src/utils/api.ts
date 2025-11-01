@@ -1,4 +1,10 @@
-import { AnswerResponse, SessionConfig, SessionResponse } from "../types";
+import {
+  AnswerResponse,
+  SessionConfig,
+  SessionResponse,
+  ChatSessionResponse,
+  ChatMessageResponse,
+} from "../types";
 
 const DEFAULT_BACKEND_URL = "http://localhost:8000";
 
@@ -77,4 +83,29 @@ export async function submitAnswer(
     level: payload.level,
     nextQuestion: payload.next_question,
   };
+}
+
+export async function createChatSession(): Promise<ChatSessionResponse> {
+  const payload = await handleResponse<{ chat_session_id: string }>(
+    await fetch(`${API_BASE_URL}/api/chat/session`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    }),
+  )
+
+  return { chatSessionId: payload.chat_session_id }
+}
+
+export async function sendChatMessage(
+  chatSessionId: string,
+  message: string,
+): Promise<ChatMessageResponse> {
+  const payload = await handleResponse<{ reply: string }>(
+    await fetch(`${API_BASE_URL}/api/chat/${chatSessionId}/message`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message }),
+    }),
+  )
+  return { reply: payload.reply }
 }

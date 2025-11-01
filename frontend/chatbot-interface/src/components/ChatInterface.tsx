@@ -13,7 +13,12 @@ import { InteractiveButton } from "./InteractiveButton";
 import { useIsMobile } from "./ui/use-mobile";
 import { Message } from "../types";
 import { createAIMessage, createUserMessage } from "../utils/messageUtils";
-import { createSession, submitAnswer } from "../utils/api";
+import {
+  createSession,
+  submitAnswer,
+  createChatSession,
+  sendChatMessage,
+} from "../utils/api";
 
 export function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -25,6 +30,9 @@ export function ChatInterface() {
   const [score, setScore] = useState(0);
   const [level, setLevel] = useState(1);
   const [error, setError] = useState<string | null>(null);
+  const [chatSessionId, setChatSessionId] = useState<string | null>(null);
+  const [pendingQuestion, setPendingQuestion] = useState<string | null>(null);
+  const [hasPresentedQuestion, setHasPresentedQuestion] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
 
@@ -38,6 +46,7 @@ export function ChatInterface() {
 
   const initialiseSession = useCallback(async () => {
     setSessionId(null);
+    setChatSessionId(null);
     setMessages([]);
     setScore(0);
     setLevel(1);
@@ -46,18 +55,34 @@ export function ChatInterface() {
     setIsTyping(true);
 
     try {
-      const session = await createSession({
-        gradingMode: selectedModel === "fast" ? "fast" : "ai",
-        useAiAnswers: selectedModel !== "fast",
-      });
-      setSessionId(session.sessionId);
-      setScore(session.score);
-      setLevel(session.level);
-      setMessages([createAIMessage(session.question)]);
+      setMessages([
+        createAIMessage(
+          "Welcome to the Learning Ladder! Ask me anything when you're ready, and we'll climb together.",
+        ),
+      ]);
+
+      if (selectedModel === "tutor") {
+        const chat = await createChatSession();
+        setChatSessionId(chat.chatSessionId);
+        setPendingQuestion(null);
+        setHasPresentedQuestion(true);
+      } else {
+        const session = await createSession({
+          gradingMode: selectedModel === "fast" ? "fast" : "ai",
+          useAiAnswers: selectedModel !== "fast",
+        });
+        setSessionId(session.sessionId);
+        setScore(session.score);
+        setLevel(session.level);
+        setPendingQuestion(session.question);
+        setHasPresentedQuestion(false);
+      }
     } catch (err) {
       const message =
         err instanceof Error ? err.message : "Failed to start a new session.";
       setError(message);
+      setPendingQuestion(null);
+      setHasPresentedQuestion(false);
       setMessages([
         createAIMessage(
           "I couldn't start a new tutoring session right now. Make sure the backend API is running and try again.\n\nDetails: " +
@@ -86,7 +111,20 @@ export function ChatInterface() {
       setIsTyping(true);
       setError(null);
 
-      if (!sessionId) {
+      const inTutor = selectedModel === "tutor";
+
+      if (inTutor && !chatSessionId) {
+        setMessages((prev) => [
+          ...prev,
+          createAIMessage(
+            "I’m setting up our chat. Please try again in a moment.",
+          ),
+        ]);
+        setIsTyping(false);
+        return;
+      }
+
+      if (!inTutor && !sessionId) {
         setMessages((prev) => [
           ...prev,
           createAIMessage(
@@ -97,7 +135,33 @@ export function ChatInterface() {
         return;
       }
 
+      if (!inTutor && !hasPresentedQuestion) {
+        if (pendingQuestion) {
+          setMessages((prev) => [
+            ...prev,
+            createAIMessage(pendingQuestion),
+          ]);
+          setPendingQuestion(null);
+          setHasPresentedQuestion(true);
+        } else {
+          setMessages((prev) => [
+            ...prev,
+            createAIMessage(
+              "I'm preparing your first challenge—give me a moment and then try again.",
+            ),
+          ]);
+        }
+        setIsTyping(false);
+        return;
+      }
+
       try {
+        if (inTutor && chatSessionId) {
+          const reply = await sendChatMessage(chatSessionId, trimmed);
+          setMessages((prev) => [...prev, createAIMessage(reply.reply)]);
+          return;
+        }
+
         const response = await submitAnswer(sessionId, trimmed);
         setScore(response.score);
         setLevel(response.level);
@@ -112,14 +176,19 @@ export function ChatInterface() {
           ? `AI reference answer: ${response.aiReferenceAnswer}`
           : null;
         const progress = `Score: ${response.score} | Level: ${response.level}`;
-        const nextPrompt = `Next question:\n${response.nextQuestion}`;
-
-        const aiMessage = createAIMessage(
-          [feedback, correction, reference, progress, nextPrompt]
-            .filter(Boolean)
-            .join("\n\n"),
+        const feedbackParts = [feedback, correction, reference, progress].filter(
+          Boolean,
         );
-        setMessages((prev) => [...prev, aiMessage]);
+        setMessages((prev) => {
+          const updates = [...prev];
+          if (feedbackParts.length > 0) {
+            updates.push(createAIMessage(feedbackParts.join("\n\n")));
+          }
+          updates.push(createAIMessage(response.nextQuestion));
+          return updates;
+        });
+        setHasPresentedQuestion(true);
+        setPendingQuestion(null);
       } catch (err) {
         const message =
           err instanceof Error
@@ -127,6 +196,8 @@ export function ChatInterface() {
             : "Something went wrong while grading that answer.";
         setError(message);
         setSessionId(null);
+        setHasPresentedQuestion(false);
+        setPendingQuestion(null);
         setMessages((prev) => [
           ...prev,
           createAIMessage(
@@ -137,7 +208,7 @@ export function ChatInterface() {
         setIsTyping(false);
       }
     },
-    [sessionId],
+    [sessionId, chatSessionId, selectedModel, hasPresentedQuestion, pendingQuestion],
   );
 
   const handleToggleLearningLadder = useCallback(() => {

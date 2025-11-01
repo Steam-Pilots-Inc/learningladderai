@@ -44,7 +44,7 @@ export const AI_RESPONSES = [
 export const MODEL_OPTIONS = [
   { value: "auto", label: "Auto Model", icon: Gauge },
   { value: "fast", label: "Quick Model", icon: Zap },
-  { value: "thinking", label: "Thinking Model", icon: Brain }
+  { value: "tutor", label: "Tutor Mode", icon: Brain }
 ];
 
 export const WELCOME_MESSAGE = "Ask me anything about your studies, get explanations, work through problems, or explore new topics. I'm here to help you learn and teach more effectively.";
