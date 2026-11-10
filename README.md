@@ -1,4 +1,19 @@
-# STEAM Pilots Learning Ladder AI
+<h1 align="center">Learning Ladder AI</h1>
+
+<p align="center">Adaptive STEM tutoring with generated questions, answer grading, and conversational learning sessions.</p>
+
+<p align="center">
+  <a href="https://react.dev/"><img src="https://img.shields.io/badge/React-149ECA?style=plastic&logo=react&logoColor=white" alt="React" /></a>
+  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-3178C6?style=plastic&logo=typescript&logoColor=white" alt="TypeScript" /></a>
+  <a href="https://vite.dev/"><img src="https://img.shields.io/badge/Vite-646CFF?style=plastic&logo=vite&logoColor=white" alt="Vite" /></a>
+  <a href="https://ui.shadcn.com/"><img src="https://img.shields.io/badge/shadcn%2Fui-000000?style=plastic&logo=shadcnui&logoColor=white" alt="shadcn/ui" /></a>
+</p>
+
+<p align="center">
+  <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3776AB?style=plastic&logo=python&logoColor=white" alt="Python" /></a>
+  <a href="https://fastapi.tiangolo.com/"><img src="https://img.shields.io/badge/FastAPI-009688?style=plastic&logo=fastapi&logoColor=white" alt="FastAPI" /></a>
+  <a href="https://ai.google.dev/"><img src="https://img.shields.io/badge/Google%20Gemini-4285F4?style=plastic&logo=googlegemini&logoColor=white" alt="Google Gemini" /></a>
+</p>
 
 Learning Ladder AI is a STEM tutoring prototype with adaptive question generation, answer grading, and conversational tutoring powered by Gemini. React and TypeScript interfaces connect to a Python FastAPI backend; a CLI exposes the learning ladder directly.
 
