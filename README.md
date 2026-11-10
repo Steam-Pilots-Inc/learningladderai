@@ -19,6 +19,22 @@ Learning Ladder AI is a STEM tutoring prototype with adaptive question generatio
 
 Developed during work with STEAM Pilots. This repository preserves the project and its contributors' work under the existing [MIT license](LICENSE).
 
+## Screenshots
+
+Captured from a local run of the [homepage concept](frontend/homepage-concept/). Profiles, metrics, progress, and activity are built-in sample data. The tutor view is an interface prototype; the Gemini-connected tutor in `frontend/chatbot-interface/` requires the backend and an API key.
+
+### Homepage
+
+![Learning Ladder AI homepage with STEM challenges and a sample progress overview](docs/screenshots/homepage.png)
+
+### Student dashboard
+
+![Student dashboard showing sample learning progress, weekly activity, achievements, and a calendar](docs/screenshots/student-dashboard.png)
+
+### Tutor interface concept
+
+![Tutor interface concept with subject selection, example prompts, and a chat panel](docs/screenshots/tutor-concept.png)
+
 ## Structure
 
 - `frontend/chatbot-interface/`: conversational tutor interface.
